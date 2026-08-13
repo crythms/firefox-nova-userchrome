@@ -18,6 +18,8 @@ To uninstall, delete the files (or flip the pref back to `false`) and restart.
 
 This targets the Nova redesign on Nightly and leans on internal element IDs, so it can break on any update. If Firefox looks wrong after an upgrade, remove the `chrome` folder first.
 
-## Credits
+## License
+
+Mozilla Public License 2.0 — see [LICENSE](LICENSE).
 
 `autohide_main_toolbar.css` is from [MrOtherGuy/firefox-csshacks](https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/autohide_main_toolbar.css), used under the Mozilla Public License 2.0. See that repository for updates and the full license text.
