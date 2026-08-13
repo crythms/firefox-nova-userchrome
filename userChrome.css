@@ -1,0 +1,40 @@
+/* Example userChrome.css file */
+
+/* Import your desired components first */
+
+@import url(autohide_main_toolbar.css);
+
+/* Apply your custom modifications after imports */
+
+/* Nova compact tabs */
+:root {
+  --tab-min-height: 22px !important;
+  --tab-margin-block: 1px !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"] {
+  min-height: 25px !important;
+  height: 25px !important;
+  padding-top: 2px !important;
+  margin-top: 2px !important;
+}
+
+#tabbrowser-tabs[orient="horizontal"] .tab-background {
+  margin-block: 1px !important;
+}
+
+.titlebar-buttonbox-container {
+  transform: translateY(2px) !important;
+}
+
+:root{
+  --toolbar-bgcolor: rgb(36,44,59) !important;
+  --uc-menu-bkgnd: var(--toolbar-bgcolor);
+  --arrowpanel-background: var(--toolbar-bgcolor) !important;
+  --autocomplete-popup-background: var(--toolbar-bgcolor) !important;
+  --uc-menu-disabled: rgb(90,90,90) !important;
+  --lwt-toolbar-field-focus: rgb(36,44,59) !important;
+}
+
+#sidebar-box{ --sidebar-background-color: var(--toolbar-bgcolor) !important; }
+window.sidebar-panel{ --lwt-sidebar-background-color: rgb(36,44,59) !important; }
