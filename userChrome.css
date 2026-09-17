@@ -9,13 +9,12 @@
 /* Nova compact tabs */
 :root {
   --tab-min-height: 22px !important;
-  --tab-margin-block: 1px !important;
 }
 
 #tabbrowser-tabs[orient="horizontal"] {
   min-height: 25px !important;
   height: 25px !important;
-  padding-top: 2px !important;
+  padding-top: 1px !important;
   margin-top: 2px !important;
 }
 
@@ -24,11 +23,15 @@
 }
 
 .titlebar-buttonbox-container {
-  transform: translateY(2px) !important;
+  transform: translateY(1px) !important;
 }
 
 :root{
+  /* Palette source. Firefox no longer reads --toolbar-bgcolor itself; the
+     live Nova variable is --toolbar-background-color (aliased below).
+     --lwt-toolbar-field-focus is likewise no longer read by current Nightly. */
   --toolbar-bgcolor: rgb(36,44,59) !important;
+  --toolbar-background-color: var(--toolbar-bgcolor) !important;
   --uc-menu-bkgnd: var(--toolbar-bgcolor);
   --arrowpanel-background: var(--toolbar-bgcolor) !important;
   --autocomplete-popup-background: var(--toolbar-bgcolor) !important;
@@ -38,3 +41,41 @@
 
 #sidebar-box{ --sidebar-background-color: var(--toolbar-bgcolor) !important; }
 window.sidebar-panel{ --lwt-sidebar-background-color: rgb(36,44,59) !important; }
+
+/* Translucent tab strip (macOS) --------------------------------------------
+ * #TabsToolbar paints no background of its own; it shows <body>, which paints
+ * --toolbox-background-color. Clearing that makes only the strip see-through:
+ * #nav-bar and #PersonalToolbar paint --toolbar-background-color themselves.
+ * body::after mirrors Firefox's own native-theme vibrancy path (browser-shared.css).
+ * For blur of what is behind the window, set in about:config:
+ *   widget.macos.titlebar-blend-mode.behind-window = true
+ */
+@media (-moz-platform: macos) {
+  :root {
+    /* Slate tint over the frosted material. Raise the alpha for more slate,
+       lower it for more see-through. */
+    --uc-tabbar-tint: rgba(36, 44, 59, 0.45);
+  }
+
+  body {
+    background-color: transparent !important;
+  }
+
+  body, #navigator-toolbox {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+  body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    -moz-default-appearance: -moz-window-titlebar;
+    appearance: auto;
+  }
+
+  #TabsToolbar {
+    background-color: var(--uc-tabbar-tint) !important;
+  }
+}
