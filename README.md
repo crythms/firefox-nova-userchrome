@@ -6,6 +6,8 @@ A small `userChrome.css` setup for the Firefox **Nova** UI on Nightly. It does t
 - **Compacts and darkens the chrome.** Shorter tabs (22px) in a 25px tab strip with tightened margins, and a dark slate accent (`rgb(36,44,59)`) applied to the toolbar, panels, URL bar autocomplete popup, and sidebar.
 - **Makes the tab strip translucent (macOS).** The bar the tabs sit in becomes a frosted, slate-tinted pane that blurs whatever is behind the window. The tabs and the nav bar stay opaque. Adjust the tint with the `--uc-tabbar-tint` variable in `userChrome.css`; lower the alpha for more see-through, raise it for more slate.
 
+The slate colors and the frosted tab strip only apply with the default theme. Pick any other theme (Dark, Light, Alpenglow, or one from the theme picker or AMO) and Firefox uses that theme's colors instead. The compact sizing and auto-hiding toolbar stay on either way.
+
 ## Install
 
 1. In `about:config`, set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.

@@ -26,7 +26,13 @@
   transform: translateY(1px) !important;
 }
 
-:root{
+/* The slate palette and the frosted tab strip only apply while the default
+ * theme is active, so any other theme (Dark, Light, Alpenglow, one from the
+ * theme picker or AMO) keeps its own colors. Firefox stamps the active theme
+ * on <html theme-effective-id>. Nova's in-app Dark and Light themes don't set
+ * [lwtheme], so matching on [lwtheme] alone would miss them.
+ */
+:root[theme-effective-id="default-theme@mozilla.org"]{
   /* Palette source. Firefox no longer reads --toolbar-bgcolor itself; the
      live Nova variable is --toolbar-background-color (aliased below).
      --lwt-toolbar-field-focus is likewise no longer read by current Nightly. */
@@ -39,8 +45,10 @@
   --lwt-toolbar-field-focus: rgb(36,44,59) !important;
 }
 
-#sidebar-box{ --sidebar-background-color: var(--toolbar-bgcolor) !important; }
-window.sidebar-panel{ --lwt-sidebar-background-color: rgb(36,44,59) !important; }
+:root[theme-effective-id="default-theme@mozilla.org"] #sidebar-box{ --sidebar-background-color: var(--toolbar-bgcolor) !important; }
+/* Sidebar panels are separate documents without theme-effective-id; step
+   aside for themes that define their own sidebar colors. */
+window.sidebar-panel:not([lwt-sidebar]){ --lwt-sidebar-background-color: rgb(36,44,59) !important; }
 
 /* Translucent tab strip (macOS) --------------------------------------------
  * #TabsToolbar paints no background of its own; it shows <body>, which paints
@@ -51,19 +59,19 @@ window.sidebar-panel{ --lwt-sidebar-background-color: rgb(36,44,59) !important; 
  *   widget.macos.titlebar-blend-mode.behind-window = true
  */
 @media (-moz-platform: macos) {
-  :root {
+  :root[theme-effective-id="default-theme@mozilla.org"] {
     /* Slate tint over the frosted material. Raise the alpha for more slate,
        lower it for more see-through. */
     --uc-tabbar-tint: rgba(36, 44, 59, 0.45);
   }
 
-  body,
-  #navigator-toolbox {
+  :root[theme-effective-id="default-theme@mozilla.org"] body,
+  :root[theme-effective-id="default-theme@mozilla.org"] #navigator-toolbox {
     background-color: transparent !important;
     background-image: none !important;
   }
 
-  body::after {
+  :root[theme-effective-id="default-theme@mozilla.org"] body::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -72,7 +80,7 @@ window.sidebar-panel{ --lwt-sidebar-background-color: rgb(36,44,59) !important; 
     appearance: auto;
   }
 
-  #TabsToolbar {
+  :root[theme-effective-id="default-theme@mozilla.org"] #TabsToolbar {
     background-color: var(--uc-tabbar-tint) !important;
   }
 }
