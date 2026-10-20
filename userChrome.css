@@ -26,7 +26,7 @@
   transform: translateY(1px) !important;
 }
 
-/* The slate palette and the frosted tab strip only apply while the default
+/* The dark palette and the tab strip tint only apply while the default
  * theme is active, so any other theme (Dark, Light, Alpenglow, one from the
  * theme picker or AMO) keeps its own colors. Firefox stamps the active theme
  * on <html theme-effective-id>. Nova's in-app Dark and Light themes don't set
@@ -36,19 +36,19 @@
   /* Palette source. Firefox no longer reads --toolbar-bgcolor itself; the
      live Nova variable is --toolbar-background-color (aliased below).
      --lwt-toolbar-field-focus is likewise no longer read by current Nightly. */
-  --toolbar-bgcolor: rgb(36,44,59) !important;
+  --toolbar-bgcolor: rgb(30,32,32) !important;
   --toolbar-background-color: var(--toolbar-bgcolor) !important;
   --uc-menu-bkgnd: var(--toolbar-bgcolor);
   --arrowpanel-background: var(--toolbar-bgcolor) !important;
   --autocomplete-popup-background: var(--toolbar-bgcolor) !important;
   --uc-menu-disabled: rgb(90,90,90) !important;
-  --lwt-toolbar-field-focus: rgb(36,44,59) !important;
+  --lwt-toolbar-field-focus: rgb(30,32,32) !important;
 }
 
 :root[theme-effective-id="default-theme@mozilla.org"] #sidebar-box{ --sidebar-background-color: var(--toolbar-bgcolor) !important; }
 /* Sidebar panels are separate documents without theme-effective-id; step
    aside for themes that define their own sidebar colors. */
-window.sidebar-panel:not([lwt-sidebar]){ --lwt-sidebar-background-color: rgb(36,44,59) !important; }
+window.sidebar-panel:not([lwt-sidebar]){ --lwt-sidebar-background-color: rgb(30,32,32) !important; }
 
 /* Translucent tab strip (macOS) --------------------------------------------
  * #TabsToolbar paints no background of its own; it shows <body>, which paints
@@ -60,9 +60,9 @@ window.sidebar-panel:not([lwt-sidebar]){ --lwt-sidebar-background-color: rgb(36,
  */
 @media (-moz-platform: macos) {
   :root[theme-effective-id="default-theme@mozilla.org"] {
-    /* Slate tint over the frosted material. Raise the alpha for more slate,
-       lower it for more see-through. */
-    --uc-tabbar-tint: rgba(36, 44, 59, 0.45);
+    /* Near-black tint over the frosted material. At alpha 1 the strip is solid;
+       lower the alpha to let the frost show through. */
+    --uc-tabbar-tint: rgba(30, 32, 32, 1);
   }
 
   :root[theme-effective-id="default-theme@mozilla.org"] body,
