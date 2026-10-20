@@ -2,29 +2,9 @@
 
 /* Import your desired components first */
 
-@import url(autohide_main_toolbar.css);
+@import url(one_line_toolbar.css);
 
 /* Apply your custom modifications after imports */
-
-/* Nova compact tabs */
-:root {
-  --tab-min-height: 22px !important;
-}
-
-#tabbrowser-tabs[orient="horizontal"] {
-  min-height: 25px !important;
-  height: 25px !important;
-  padding-top: 1px !important;
-  margin-top: 2px !important;
-}
-
-#tabbrowser-tabs[orient="horizontal"] .tab-background {
-  margin-block: 1px !important;
-}
-
-.titlebar-buttonbox-container {
-  transform: translateY(1px) !important;
-}
 
 /* The dark palette only applies while the default theme is active, so any
  * other theme (Dark, Light, Alpenglow, one from the theme picker or AMO)
@@ -53,6 +33,8 @@ window.sidebar-panel:not([lwt-sidebar]){ --lwt-sidebar-background-color: rgb(30,
 /* Tab strip (macOS) ---------------------------------------------------------
  * #TabsToolbar paints no background of its own; it shows <body>, which Nova
  * fills with its toolbox color and gradient. Paint it with the palette instead.
+ * On the single row one_line_toolbar.css makes the strip transparent over the
+ * nav bar, so this only shows when the two rows return (Customize Toolbar).
  */
 @media (-moz-platform: macos) {
   :root[theme-effective-id="default-theme@mozilla.org"] #TabsToolbar {

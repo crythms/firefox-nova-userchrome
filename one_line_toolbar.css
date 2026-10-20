@@ -1,0 +1,102 @@
+/* Helium-style single toolbar row for the Firefox Nova UI (Firefox 158+):
+ *   [window controls][back][forward][reload][URL bar][tabs…][+][space][extensions][menu]
+ *
+ * #nav-bar stays an ordinary toolbar, so Firefox's overflow handling (which
+ * measures #nav-bar's own box) keeps working on narrow windows.
+ * #vertical-spacer, a built-in spring that can't be removed and never moves
+ * into the overflow menu, is moved to sit right after the URL bar and grows to
+ * fill the free space: that's the tab slot. #TabsToolbar is taken out of the
+ * flow and pinned over the slot with CSS anchor positioning.
+ *
+ * Customize mode, vertical tabs, and popup, mini, Taskbar Tab and AI windows
+ * keep Firefox's normal layout.
+ */
+
+:root {
+  /* URL bar width: about 30% of the window, within bounds. */
+  --uc-urlbar-width: clamp(176px, 30vw, 640px);
+  /* The tab strip never gets narrower than this; past it, toolbar buttons
+     move into the overflow menu instead. */
+  --uc-tab-slot-min-width: 160px;
+}
+
+@media not -moz-pref("sidebar.verticalTabs") {
+  /* Tabs exactly as tall as the URL bar, no extra vertical margin. Set on
+     :root because Firefox derives --tabstrip-min-height from these there. */
+  :root {
+    --tab-min-height: var(--urlbar-height, 32px) !important;
+    --tab-margin-block: 0px !important;
+  }
+
+  :root:not([customizing], [chromehidden~="toolbar"], [popup-window], [mini-window], [taskbartab], [ai-window]) #navigator-toolbox:not([tabs-hidden]) {
+    /* Containing block for the floating tab strip. */
+    position: relative !important;
+
+    > #nav-bar {
+      anchor-name: --uc-navbar;
+      /* One row, so no separator between tabs and toolbar. */
+      border-top-style: none !important;
+    }
+
+    > #nav-bar > #nav-bar-customization-target {
+      /* No flexible spaces: nothing between reload and the URL bar, and the
+         tab slot takes all the free space after it. */
+      > toolbarspring:not(#vertical-spacer) {
+        display: none !important;
+      }
+
+      > #urlbar-container {
+        flex: none !important;
+        width: var(--uc-urlbar-width) !important;
+        /* Keep the open URL bar's outline, which overhangs the field by about
+           8px, above the tab strip. */
+        z-index: 2 !important;
+      }
+
+      /* Everything placed after the URL bar goes after the tab slot. */
+      > #urlbar-container ~ :not(#vertical-spacer) {
+        order: 2 !important;
+      }
+
+      /* The tab slot. */
+      > #vertical-spacer {
+        anchor-name: --uc-tab-slot;
+        display: flex !important;
+        order: 1 !important;
+        flex: 1 1 0 !important;
+        width: auto !important;
+        min-width: var(--uc-tab-slot-min-width) !important;
+        max-width: none !important;
+      }
+    }
+
+    /* The tab strip, floated over the slot. */
+    > #TabsToolbar {
+      position: absolute !important;
+      z-index: 1 !important;
+      left: anchor(--uc-tab-slot left) !important;
+      right: anchor(--uc-tab-slot right) !important;
+      top: anchor(--uc-navbar top) !important;
+      bottom: anchor(--uc-navbar bottom) !important;
+      margin: 0 !important;
+      min-height: 0 !important;
+      /* .toolbar-items has align="end", which Firefox enforces with a UA
+         !important rule, so center the tabs from here instead. */
+      align-items: center !important;
+      /* The nav bar's color shows through; use its text color so tab labels
+         stay readable with any theme. */
+      background: transparent !important;
+      color: var(--toolbar-text-color) !important;
+
+      /* Window controls and titlebar spacers live in the nav bar now. */
+      > :is(.titlebar-buttonbox-container, .titlebar-spacer) {
+        display: none !important;
+      }
+    }
+  }
+
+  /* Window controls (macOS traffic lights) at the start of the row. */
+  :root[customtitlebar]:not([inFullscreen], [customizing], [chromehidden~="toolbar"], [popup-window], [mini-window], [taskbartab], [ai-window]) #navigator-toolbox:not([tabs-hidden]) > #nav-bar > .titlebar-buttonbox-container {
+    display: flex !important;
+  }
+}
