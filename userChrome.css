@@ -26,9 +26,9 @@
   transform: translateY(1px) !important;
 }
 
-/* The dark palette and the tab strip tint only apply while the default
- * theme is active, so any other theme (Dark, Light, Alpenglow, one from the
- * theme picker or AMO) keeps its own colors. Firefox stamps the active theme
+/* The dark palette only applies while the default theme is active, so any
+ * other theme (Dark, Light, Alpenglow, one from the theme picker or AMO)
+ * keeps its own colors. Firefox stamps the active theme
  * on <html theme-effective-id>. Nova's in-app Dark and Light themes don't set
  * [lwtheme], so matching on [lwtheme] alone would miss them.
  */
@@ -50,37 +50,12 @@
    aside for themes that define their own sidebar colors. */
 window.sidebar-panel:not([lwt-sidebar]){ --lwt-sidebar-background-color: rgb(30,32,32) !important; }
 
-/* Translucent tab strip (macOS) --------------------------------------------
- * #TabsToolbar paints no background of its own; it shows <body>, which paints
- * --toolbox-background-color. Clearing that makes only the strip see-through:
- * #nav-bar and #PersonalToolbar paint --toolbar-background-color themselves.
- * body::after mirrors Firefox's own native-theme vibrancy path (browser-shared.css).
- * For blur of what is behind the window, set in about:config:
- *   widget.macos.titlebar-blend-mode.behind-window = true
+/* Tab strip (macOS) ---------------------------------------------------------
+ * #TabsToolbar paints no background of its own; it shows <body>, which Nova
+ * fills with its toolbox color and gradient. Paint it with the palette instead.
  */
 @media (-moz-platform: macos) {
-  :root[theme-effective-id="default-theme@mozilla.org"] {
-    /* Near-black tint over the frosted material. At alpha 1 the strip is solid;
-       lower the alpha to let the frost show through. */
-    --uc-tabbar-tint: rgba(30, 32, 32, 1);
-  }
-
-  :root[theme-effective-id="default-theme@mozilla.org"] body,
-  :root[theme-effective-id="default-theme@mozilla.org"] #navigator-toolbox {
-    background-color: transparent !important;
-    background-image: none !important;
-  }
-
-  :root[theme-effective-id="default-theme@mozilla.org"] body::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    -moz-default-appearance: -moz-window-titlebar;
-    appearance: auto;
-  }
-
   :root[theme-effective-id="default-theme@mozilla.org"] #TabsToolbar {
-    background-color: var(--uc-tabbar-tint) !important;
+    background-color: var(--toolbar-bgcolor) !important;
   }
 }
