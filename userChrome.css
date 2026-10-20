@@ -6,6 +6,20 @@
 
 /* Apply your custom modifications after imports */
 
+/* Shorter toolbar ------------------------------------------------------------
+ * The URL bar and toolbar buttons are 32px tall in normal density and 28px in
+ * compact, with 4px above and below the URL bar either way (40px or 36px rows).
+ * Nova switches to compact on its own in small windows unless a density has
+ * been picked, so this applies to both: the compact 28px sizes (the tabs follow
+ * the URL bar, see one_line_toolbar.css) with 2px above and below, for a 32px
+ * row. Touch density keeps its own sizes.
+ */
+:root:not([uidensity="touch"]) {
+  --urlbar-height: max(28px, 1.4em) !important;
+  --urlbar-container-padding-block: 2px !important;
+  --toolbarbutton-padding-inner: var(--toolbarbutton-padding-inner-compact) !important;
+}
+
 /* The dark palette only applies while the default theme is active, so any
  * other theme (Dark, Light, Alpenglow, one from the theme picker or AMO)
  * keeps its own colors. Firefox stamps the active theme

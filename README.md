@@ -2,7 +2,7 @@
 
 A small `userChrome.css` setup for the Firefox **Nova** UI (Firefox 158 or later). It does two things:
 
-- **Puts the tabs and the toolbar on one row**, laid out like the Helium browser: window controls, back, forward, reload, the URL bar, then the tabs and the new-tab button, then your extension buttons and the menu on the right. The URL bar takes about 30% of the window, and tabs are as tall as the URL bar. Customize Toolbar, vertical tabs, and popup windows keep Firefox's normal two rows.
+- **Puts the tabs and the toolbar on one row**, laid out like the Helium browser: window controls, back, forward, reload, the URL bar, then the tabs and the new-tab button, then your extension buttons and the menu on the right. The URL bar takes about 30% of the window. The URL bar, tabs, and toolbar buttons are all 28px tall with 2px above and below, a 32px row (Nova's is 40px, or 36px in compact density). Customize Toolbar, vertical tabs, and popup windows keep Firefox's normal two rows.
 - **Darkens the chrome.** A near-black accent (`rgb(30,32,32)`) applied to the toolbar, panels, URL bar autocomplete popup, and sidebar.
 
 The dark colors only apply with the default theme. Pick any other theme (Dark, Light, Alpenglow, or one from the theme picker or AMO) and Firefox uses that theme's colors instead. The one-row layout stays on either way.
@@ -26,6 +26,8 @@ To change the URL bar width or the narrowest the tab area may get, override thes
   --uc-tab-slot-min-width: 160px;
 }
 ```
+
+To change the bar's height, edit the values in the "Shorter toolbar" block of `userChrome.css`. Nova's defaults are a 32px URL bar (28px in compact density) with 4px above and below.
 
 The Sidebar and List all tabs (⌄) buttons aren't part of Helium's layout. Right-click the toolbar, choose **Customize Toolbar…**, and drag them off if you don't want them. Any flexible spaces in the toolbar are hidden on the single row.
 
